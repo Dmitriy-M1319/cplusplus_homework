@@ -3,7 +3,6 @@
 
 namespace cache {
 
-
     class page_t
     {
     private:
@@ -12,9 +11,10 @@ namespace cache {
     public:
         page_t(int size);
         page_t(int size, const char *data);
+        page_t();
         ~page_t();
         int size();
-        char *get_data();
+        const char *get_data();
     };
 }
 #endif
