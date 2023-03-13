@@ -81,7 +81,7 @@ void Police::set_meal_percent(int percent)
 
 void Police::increase(int &all_meal)
 {
-    all_meal += all_meal * (meal_percent / 100);
+    all_meal += all_meal * meal_percent / 100;
 }
 
 
@@ -107,6 +107,8 @@ void Soldier::set_pest_count(int count)
 void Soldier::destroy(int &all_pests)
 {
     all_pests -= pest_destroyed_count;
+    if(all_pests < 0)
+        all_pests = 0;
 }
 
 
