@@ -32,7 +32,7 @@ namespace task2
     /**
      * Класс муравья - рабочего
      */
-    class Worker: Larva
+    class Worker: public Larva
     {
     private:
         int meal_extracted;
@@ -41,12 +41,13 @@ namespace task2
         Worker(int meal, int extracted);
         int get_meal_extracted();
         void set_meal_extracted(int extracted);
+        void extract(int& all_meal);
     };
 
     /*
      * Класс муравья - полицейского 
      */
-    class Police: Larva
+    class Police: public Larva
     {
     private:
         int meal_percent;
@@ -61,7 +62,7 @@ namespace task2
     /**
      * Класс муравья - солдата
      */
-    class Soldier: Larva
+    class Soldier: public Larva
     {
     private:
         int pest_destroyed_count;
@@ -76,7 +77,7 @@ namespace task2
     /**
      * Класс муравья - матки
      */
-    class Mother: Larva
+    class Mother: public Larva
     {
     private:
         int new_larvas_count;

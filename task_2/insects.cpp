@@ -1,4 +1,5 @@
 #include "insects.h"
+#include <exception>
 #include <cstdlib>
 using namespace task2;
 
@@ -20,6 +21,10 @@ void Larva::set_meal_count(int count)
 
 void Larva::eat(int &all_meat)
 {
+    if(all_meat - meal_count < 0)
+    {
+        throw "Еда закончилась в муравейнике. Теперь у муравья проблемы...";
+    }
     all_meat -= meal_count;
 }
 
@@ -47,6 +52,11 @@ int Worker::get_meal_extracted()
 void Worker::set_meal_extracted(int extracted)
 {
     meal_extracted = extracted;
+}
+
+void Worker::extract(int &all_meal)
+{
+    all_meal += meal_extracted;
 }
 
 
@@ -82,7 +92,7 @@ Soldier::Soldier(): Larva()
     pest_destroyed_count = 0;
 }
 
-Soldier::Soldier(int meal, int count): Larva(count), pest_destroyed_count(count){}
+Soldier::Soldier(int meal, int count): Larva(meal), pest_destroyed_count(count){}
 
 int Soldier::get_pest_count()
 {
