@@ -60,6 +60,17 @@ BOOST_AUTO_TEST_CASE(worker_extract_meal_test)
     BOOST_TEST(all_meal == 25);
 }
 
+BOOST_AUTO_TEST_CASE(worker_set_extract_meal_test)
+{
+    int all_meal = 10;
+    task2::Worker worker{5, 20};
+
+    worker.eat(all_meal);
+    worker.set_meal_extracted(30);
+    BOOST_TEST(all_meal == 5);
+    BOOST_TEST(worker.get_meal_extracted() == 30);
+}
+
 // Модульные тесты для класса полицейского
 
 BOOST_AUTO_TEST_CASE(police_increase_meal_test)

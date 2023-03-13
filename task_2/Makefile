@@ -8,6 +8,7 @@ my_anthill: $(OBJS)
 
 tests: $(OBJS)
 	$(CC) $(CXXFLAGS) $(OBJS) insects_tests.cpp -o $(BUILD_DIR)/insects_tests
+	$(CC) $(CXXFLAGS) $(OBJS) anthill_tests.cpp -o $(BUILD_DIR)/anthill_tests
 
 $(BUILD_DIR)/insects.o: insects.cpp
 	$(CC) $(CXXFLAGS) -c insects.cpp -o $(BUILD_DIR)/insects.o

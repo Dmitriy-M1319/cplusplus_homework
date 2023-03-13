@@ -15,25 +15,21 @@ Anthill::Anthill(int larvas_start_count,
                 int meal,
                 int larvas_create_count)
 {
-    larvas.resize(larvas_start_count);
     for (int i = 0; i < larvas_start_count; i++) 
     {
         larvas.push_back(Larva(larva_meal));
     }
 
-    workers.resize(workers_start_count);
     for (int i = 0; i < workers_start_count; i++) 
     {
         workers.push_back(Worker(worker_meal, 0));
     }
 
-    policemans.resize(police_start_count);
     for (int i = 0; i < police_start_count; i++) 
     {
        policemans.push_back(Police(police_meal, 0));
     }
 
-    soldiers.resize(soldiers_start_count);
     for (int i = 0; i < soldiers_start_count; i++) 
     {
        soldiers.push_back(Soldier(soldier_meal, 0));
@@ -64,7 +60,7 @@ Mother Anthill::get_mother()
 
 void Anthill::set_extracted_for_workers(int extracted)
 {
-    for(auto worker: workers)
+    for(auto& worker: workers)
     {
         worker.set_meal_extracted(extracted);
     }
@@ -73,16 +69,16 @@ void Anthill::set_extracted_for_workers(int extracted)
 
 void Anthill::set_pests_for_soldiers(int count)
 {
-    for(auto soldier: soldiers)
+    for(auto& soldier: soldiers)
     {
-        soldier.set_meal_count(count);
+        soldier.set_pest_count(count);
     }
 }
 
 
 void Anthill::set_percents_for_policemans(int percent)
 {
-    for(auto police: policemans)
+    for(auto& police: policemans)
     {
         police.set_meal_percent(percent);
     }
@@ -135,7 +131,6 @@ void Anthill::eat_larva_childs(std::vector<T> insects)
         catch(const char* msg)
         {
             std::cout << msg << std::endl;
-            insects.erase(iter);
             meal_error_flag = true;
         }
     }
