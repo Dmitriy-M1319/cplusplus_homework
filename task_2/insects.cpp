@@ -5,28 +5,10 @@ using namespace task2;
 
 // Реализация класса личинки
 
-Larva::Larva(): meal_count(0){}
+Larva::Larva(): BaseInsect(){}
 
-Larva::Larva(int meal): meal_count(meal){}
+Larva::Larva(int meal): BaseInsect(meal){}
 
-int Larva::get_meal_count()
-{
-    return meal_count;
-}
-
-void Larva::set_meal_count(int count)
-{
-    meal_count = count;
-}
-
-void Larva::eat(int &all_meat)
-{
-    if(all_meat - meal_count < 0)
-    {
-        throw "Еда закончилась в муравейнике. Теперь у муравья проблемы...";
-    }
-    all_meat -= meal_count;
-}
 
 INSECT_TYPE Larva::reborn()
 {
@@ -37,12 +19,12 @@ INSECT_TYPE Larva::reborn()
 
 // Реализация класса муравья - рабочего
 
-Worker::Worker(): Larva()
+Worker::Worker(): BaseInsect()
 {
     meal_extracted = 0;
 }
 
-Worker::Worker(int meal, int extracted): Larva(meal), meal_extracted(extracted){}
+Worker::Worker(int meal, int extracted): BaseInsect(meal), meal_extracted(extracted){}
 
 int Worker::get_meal_extracted()
 {
@@ -62,12 +44,12 @@ void Worker::extract(int &all_meal)
 
 //  Реализация класса муравья - полицейского
 
-Police::Police(): Larva()
+Police::Police(): BaseInsect()
 {
     meal_percent = 0;
 }
 
-Police::Police(int meal, int percent): Larva(meal), meal_percent(percent){}
+Police::Police(int meal, int percent): BaseInsect(meal), meal_percent(percent){}
 
 int Police::get_meal_percent()
 {
@@ -87,12 +69,12 @@ void Police::increase(int &all_meal)
 
 // Реализация класса муравья - солдата
 
-Soldier::Soldier(): Larva()
+Soldier::Soldier(): BaseInsect()
 {
     pest_destroyed_count = 0;
 }
 
-Soldier::Soldier(int meal, int count): Larva(meal), pest_destroyed_count(count){}
+Soldier::Soldier(int meal, int count): BaseInsect(meal), pest_destroyed_count(count){}
 
 int Soldier::get_pest_count()
 {
@@ -114,12 +96,12 @@ void Soldier::destroy(int &all_pests)
 
 // Реализация класса муравья - матки
 
-Mother::Mother(): Larva()
+Mother::Mother(): BaseInsect()
 {
     new_larvas_count = 0;
 }
 
-Mother::Mother(int meal, int count): Larva(meal), new_larvas_count(count){}
+Mother::Mother(int meal, int count): BaseInsect(meal), new_larvas_count(count){}
 
 int Mother::get_larvas_count()
 {

@@ -1,6 +1,8 @@
 #ifndef INSECTS_H
 #define INSECTS_H
 
+#include "base_insect.h"
+
 namespace task2
 {
     /**
@@ -16,23 +18,20 @@ namespace task2
     /**
      * Класс личинки муравья
      */
-    class Larva
+    class Larva: public BaseInsect
     {
     protected:
         int meal_count;
     public:
         Larva();
         Larva(int meal);
-        int get_meal_count();
-        void set_meal_count(int count);
-        void eat(int& all_meat);
         INSECT_TYPE reborn();
     };
 
     /**
      * Класс муравья - рабочего
      */
-    class Worker: public Larva
+    class Worker: public BaseInsect
     {
     private:
         int meal_extracted;
@@ -47,7 +46,7 @@ namespace task2
     /*
      * Класс муравья - полицейского 
      */
-    class Police: public Larva
+    class Police: public BaseInsect
     {
     private:
         int meal_percent;
@@ -62,7 +61,7 @@ namespace task2
     /**
      * Класс муравья - солдата
      */
-    class Soldier: public Larva
+    class Soldier: public BaseInsect
     {
     private:
         int pest_destroyed_count;
@@ -77,7 +76,7 @@ namespace task2
     /**
      * Класс муравья - матки
      */
-    class Mother: public Larva
+    class Mother: public BaseInsect
     {
     private:
         int new_larvas_count;
