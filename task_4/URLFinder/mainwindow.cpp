@@ -3,15 +3,13 @@
 
 #include <QString>
 #include <QMessageBox>
-#include <QLabel>
-#include <QStackedLayout>
+#include <QListWidgetItem>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->urlsScrollArea->widget()->setLayout(new QStackedLayout());
 }
 
 MainWindow::~MainWindow()
@@ -23,6 +21,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_urlButton_clicked()
 {
     // Вставить лог с уровнем INFO
+    ui->urlListWidget->clear();
     try
     {
         QString paths = ui->filesLineInput->text();
@@ -44,18 +43,17 @@ void MainWindow::on_urlButton_clicked()
             return;
         }
 
+        ui->urlFindLabel->setText("Найденные строки запроса");
+
         foreach (const task4::UrlLocation& location, result)
         {
             // По хорошему, сделать свой виджет вывода
-            QLabel *child_label = new QLabel();
             QStringList info = {};
             info << "File: " << location.get_filename() << ", line: " << QString("%1").arg(location.get_line());
             info << ", column: " << QString("%1").arg(location.get_column());
-            info << "\nURL: " << location.get_url();
-            child_label->setText(info.join(""));
-            ui->urlsScrollArea->widget()->layout()->addWidget(child_label);
+            info << " -> URL: " << location.get_url();
+            new QListWidgetItem(info.join(""), ui->urlListWidget);
         }
-
 
     } catch(const char *msg)
     {

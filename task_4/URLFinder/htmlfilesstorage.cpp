@@ -13,8 +13,9 @@ HtmlFilesStorage::HtmlFilesStorage(QString paths)
     QStringList path_list = paths.split(u',');
     if(path_list.size() != 0)
     {
-        foreach (const QString path, path_list)
+        foreach (QString path, path_list)
         {
+            path = path.trimmed();
             QFile *file = new QFile(path);
             filepaths.push_back(file);
         }
@@ -77,7 +78,7 @@ void HtmlFilesStorage::find_urls()
             while(match_it.hasNext())
             {
                 QRegularExpressionMatch match = match_it.next();
-                QString url = match.captured(1);
+                QString url = match.captured(0);
                 int column = l.indexOf(url) + 1;
                 UrlLocation location(file->fileName(), url, line, column);
                 urls.push_back(location);
