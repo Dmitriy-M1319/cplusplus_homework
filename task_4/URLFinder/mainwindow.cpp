@@ -20,7 +20,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_urlButton_clicked()
 {
-    // Вставить лог с уровнем INFO
+    qDebug("Click on url finding button");
     ui->urlListWidget->clear();
     try
     {
@@ -28,7 +28,7 @@ void MainWindow::on_urlButton_clicked()
         task4::HtmlFilesStorage storage{paths};
         if(!storage.check_valid_paths())
         {
-            // Вставить лог с уровнем ERROR
+            qCritical("Failed to check valid filepaths");
             ui->urlFindLabel->setText("Указан некорректный список файлов!");
             return;
         }
@@ -38,7 +38,7 @@ void MainWindow::on_urlButton_clicked()
         QVector<task4::UrlLocation> result = storage.get_urls();
         if(result.size() == 0)
         {
-            // Вставить лог с уровнем INFO
+            qDebug("There are not URLs in files");
             ui->urlFindLabel->setText("Строки запроса в указанных файлах не найдены");
             return;
         }
@@ -57,7 +57,7 @@ void MainWindow::on_urlButton_clicked()
 
     } catch(const char *msg)
     {
-        // Вставить лог с уровнем ERROR
+        qDebug("Error");
         QMessageBox box;
         box.setText(msg);
         box.exec();

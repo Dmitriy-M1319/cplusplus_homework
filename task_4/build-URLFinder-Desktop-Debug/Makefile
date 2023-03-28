@@ -14,7 +14,7 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_MESSAGELOGCONTEXT -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -D_REENTRANT $(DEFINES)
 INCPATH       = -I../URLFinder -I. -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtCore -I. -I. -I/usr/lib64/qt6/mkspecs/linux-g++
@@ -288,6 +288,7 @@ DIST          = /usr/lib64/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt6/mkspecs/features/spec_post.prf \
+		../URLFinder/.qmake.stash \
 		/usr/lib64/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt6/mkspecs/features/default_pre.prf \
@@ -552,6 +553,7 @@ Makefile: ../URLFinder/URLFinder.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf
 		/usr/lib64/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt6/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt6/mkspecs/features/default_pre.prf \
@@ -804,6 +806,7 @@ Makefile: ../URLFinder/URLFinder.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf
 /usr/lib64/qt6/mkspecs/features/qt_config.prf:
 /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf:
 /usr/lib64/qt6/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib64/qt6/mkspecs/features/exclusive_builds.prf:
 /usr/lib64/qt6/mkspecs/features/toolchain.prf:
 /usr/lib64/qt6/mkspecs/features/default_pre.prf:
@@ -881,6 +884,8 @@ compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: ../URLFinder/mainwindow.h \
+		../URLFinder/htmlfilesstorage.h \
+		../URLFinder/urllocation.h \
 		moc_predefs.h \
 		/usr/lib64/qt6/libexec/moc
 	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /run/media/dimonchik/BARACHLO/Programs/C++/cplusplus_homework/task_4/build-URLFinder-Desktop-Debug/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/run/media/dimonchik/BARACHLO/Programs/C++/cplusplus_homework/task_4/URLFinder -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtCore -I. -I/usr/include/c++/12 -I/usr/include/c++/12/x86_64-redhat-linux -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-redhat-linux/12/include -I/usr/local/include -I/usr/include ../URLFinder/mainwindow.h -o moc_mainwindow.cpp
@@ -910,10 +915,14 @@ htmlfilesstorage.o: ../URLFinder/htmlfilesstorage.cpp ../URLFinder/htmlfilesstor
 		../URLFinder/urllocation.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o htmlfilesstorage.o ../URLFinder/htmlfilesstorage.cpp
 
-main.o: ../URLFinder/main.cpp ../URLFinder/mainwindow.h
+main.o: ../URLFinder/main.cpp ../URLFinder/mainwindow.h \
+		../URLFinder/htmlfilesstorage.h \
+		../URLFinder/urllocation.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../URLFinder/main.cpp
 
 mainwindow.o: ../URLFinder/mainwindow.cpp ../URLFinder/mainwindow.h \
+		../URLFinder/htmlfilesstorage.h \
+		../URLFinder/urllocation.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../URLFinder/mainwindow.cpp
 

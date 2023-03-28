@@ -4,12 +4,14 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QRegularExpressionMatchIterator>
+
 using namespace task4;
 
 HtmlFilesStorage::HtmlFilesStorage(){}
 
 HtmlFilesStorage::HtmlFilesStorage(QString paths)
 {
+    qDebug("Create HTML files storage");
     QStringList path_list = paths.split(u',');
     if(path_list.size() != 0)
     {
@@ -22,6 +24,7 @@ HtmlFilesStorage::HtmlFilesStorage(QString paths)
     }
     else
     {
+        qCritical("The file list is empty");
         throw "Названия файлов не были указаны!";
     }
 }
@@ -39,35 +42,37 @@ HtmlFilesStorage::~HtmlFilesStorage()
 
 bool HtmlFilesStorage::check_valid_paths()
 {
-    // Вставить лог с уровнем INFO
+    qDebug("Start to checking file paths for valid files");
     if(filepaths.size() == 0)
     {
-        // Вставить лог с уровнем ERROR
+        qCritical("Failed to check files - there are not paths");
         return false;
     }
     foreach (QFile *file, filepaths)
     {
         if(!file->exists())
         {
-            // Вставить лог с уровнем ERROR
+            qCritical("Failed to check files - some of files don't exist");
             return false;
         }
     }
-    // Вставить лог с уровнем INFO
+    qDebug("End to checking file paths for valid files");
     return true;
 }
 
 void HtmlFilesStorage::find_urls()
 {
-    // Вставить лог с уровнем INFO
-    // Регулярное выражение для
+    qDebug("Start to finding URLs from files");
+    // Регулярное выражение для URL
     QRegularExpression url_pattern(R"((http|ftp|gopher|news|telnet|file)\:(\/\/)www\.[a-z0-9]+\.[a-z]+\.ru)");
     // Открываем каждый файл и ищем в нем urls
     foreach (QFile *file, filepaths)
     {
-        // Вставить лог с уровнем ERROR
         if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qCritical("Failed to open file for reading");
             throw "Не удалось открыть файл " + file->fileName() + " для чтения:";
+        }
 
         QTextStream in(file);
 
@@ -87,7 +92,7 @@ void HtmlFilesStorage::find_urls()
 
         file->close();
     }
-    // Вставить лог с уровнем INFO
+    qDebug("End to finding URLs from files");
 }
 
 
