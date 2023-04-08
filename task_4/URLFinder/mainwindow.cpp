@@ -4,10 +4,12 @@
 #include <QString>
 #include <QMessageBox>
 #include <QListWidgetItem>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow),
+      files("")
 {
     ui->setupUi(this);
 }
@@ -18,14 +20,14 @@ MainWindow::~MainWindow()
 }
 
 
+
 void MainWindow::on_urlButton_clicked()
 {
     qDebug("Click on url finding button");
     ui->urlListWidget->clear();
     try
     {
-        QString paths = ui->filesLineInput->text();
-        task4::HtmlFilesStorage storage{paths};
+        task4::HtmlFilesStorage storage{files};
         if(!storage.check_valid_paths())
         {
             qCritical("Failed to check valid filepaths");
@@ -63,5 +65,25 @@ void MainWindow::on_urlButton_clicked()
         box.exec();
     }
 
+}
+
+
+void MainWindow::on_addFileButton_clicked()
+{
+    QString file = QFileDialog::getOpenFileName(nullptr, "Open File", "", "*.html");
+    if(file.isEmpty())
+    {
+       ui->urlFindLabel->setText("Указан некорректный список файлов!");
+       return;
+    }
+    else
+    {
+        if(!files.isEmpty())
+        {
+            files += QString(",");
+        }
+        files += file;
+        new QListWidgetItem(QString("File: %1").arg(file), ui->fileListWidget);
+    }
 }
 

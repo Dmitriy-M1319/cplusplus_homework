@@ -14,34 +14,11 @@
    <string>URL Finder</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="filesLineInput">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>80</y>
-      <width>881</width>
-      <height>36</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>50</y>
-      <width>681</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите полные или относительные пути до файлов формата HTML через запятую в поле ниже:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="urlFindLabel">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>180</y>
+      <x>240</x>
+      <y>230</y>
       <width>511</width>
       <height>19</height>
      </rect>
@@ -56,10 +33,10 @@
    <widget class="QPushButton" name="urlButton">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>130</y>
-      <width>301</width>
-      <height>36</height>
+      <x>710</x>
+      <y>70</y>
+      <width>161</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="text">
@@ -70,10 +47,49 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>220</y>
+      <y>300</y>
       <width>881</width>
-      <height>581</height>
+      <height>501</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addFileButton">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>70</y>
+      <width>171</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Добавить файл</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>40</y>
+      <width>66</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Файлы:</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="fileListWidget">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>70</y>
+      <width>256</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="movement">
+     <enum>QListView::Free</enum>
     </property>
    </widget>
   </widget>

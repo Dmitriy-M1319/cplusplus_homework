@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
 #include "htmlfilesstorage.h"
 #include "urllocation.h"
 
@@ -20,7 +21,10 @@ public:
 private slots:
     void on_urlButton_clicked();
 
+    void on_addFileButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QString files;
 };
 #endif // MAINWINDOW_H

@@ -60,11 +60,12 @@ bool HtmlFilesStorage::check_valid_paths()
     return true;
 }
 
+// Сделать перегрузку на строку, стрим или файл
 void HtmlFilesStorage::find_urls()
 {
     qDebug("Start to finding URLs from files");
     // Регулярное выражение для URL
-    QRegularExpression url_pattern(R"((http|ftp|gopher|news|telnet|file)\:(\/\/)www\.[a-z0-9]+\.[a-z]+\.ru)");
+    QRegularExpression url_pattern(R"((http|ftp|gopher|news|telnet|file)\:(\/\/)www\.[a-z0-9]+\.[a-z0-9]+\.ru)");
     // Открываем каждый файл и ищем в нем urls
     foreach (QFile *file, filepaths)
     {

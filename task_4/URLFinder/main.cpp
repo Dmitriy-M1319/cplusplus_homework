@@ -14,8 +14,8 @@
 */
 void myLogMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-    QFile log_file("applog.log");
-    if(!log_file.open(QIODeviceBase::Append | QIODeviceBase::Text))
+    QFile log_file("applog.txt");
+    if(!log_file.open(QFile::Append | QFile::Text))
     {
         return;
     }

@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -25,12 +26,11 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
+    QLineEdit *filesLineInput;
+    QLabel *label;
     QLabel *urlFindLabel;
     QPushButton *urlButton;
     QListWidget *urlListWidget;
-    QPushButton *addFileButton;
-    QLabel *label;
-    QListWidget *fileListWidget;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -41,26 +41,22 @@ public:
         MainWindow->resize(962, 856);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        filesLineInput = new QLineEdit(centralwidget);
+        filesLineInput->setObjectName(QString::fromUtf8("filesLineInput"));
+        filesLineInput->setGeometry(QRect(40, 80, 881, 36));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(140, 50, 681, 19));
         urlFindLabel = new QLabel(centralwidget);
         urlFindLabel->setObjectName(QString::fromUtf8("urlFindLabel"));
-        urlFindLabel->setGeometry(QRect(240, 230, 511, 19));
+        urlFindLabel->setGeometry(QRect(230, 180, 511, 19));
         urlFindLabel->setAlignment(Qt::AlignCenter);
         urlButton = new QPushButton(centralwidget);
         urlButton->setObjectName(QString::fromUtf8("urlButton"));
-        urlButton->setGeometry(QRect(710, 70, 161, 121));
+        urlButton->setGeometry(QRect(330, 130, 301, 36));
         urlListWidget = new QListWidget(centralwidget);
         urlListWidget->setObjectName(QString::fromUtf8("urlListWidget"));
-        urlListWidget->setGeometry(QRect(40, 300, 881, 501));
-        addFileButton = new QPushButton(centralwidget);
-        addFileButton->setObjectName(QString::fromUtf8("addFileButton"));
-        addFileButton->setGeometry(QRect(70, 70, 171, 121));
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(440, 40, 66, 19));
-        fileListWidget = new QListWidget(centralwidget);
-        fileListWidget->setObjectName(QString::fromUtf8("fileListWidget"));
-        fileListWidget->setGeometry(QRect(350, 70, 256, 121));
-        fileListWidget->setMovement(QListView::Free);
+        urlListWidget->setGeometry(QRect(40, 220, 881, 581));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -78,10 +74,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "URL Finder", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \320\277\320\276\320\273\320\275\321\213\320\265 \320\270\320\273\320\270 \320\276\321\202\320\275\320\276\321\201\320\270\321\202\320\265\320\273\321\214\320\275\321\213\320\265 \320\277\321\203\321\202\320\270 \320\264\320\276 \321\204\320\260\320\271\320\273\320\276\320\262 \321\204\320\276\321\200\320\274\320\260\321\202\320\260 HTML \321\207\320\265\321\200\320\265\320\267 \320\267\320\260\320\277\321\217\321\202\321\203\321\216 \320\262 \320\277\320\276\320\273\320\265 \320\275\320\270\320\266\320\265:</p></body></html>", nullptr));
         urlFindLabel->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><br/></p></body></html>", nullptr));
         urlButton->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\320\271\321\202\320\270 \320\260\320\264\321\200\320\265\321\201\320\260", nullptr));
-        addFileButton->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\204\320\260\320\271\320\273", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "\320\244\320\260\320\271\320\273\321\213:", nullptr));
     } // retranslateUi
 
 };

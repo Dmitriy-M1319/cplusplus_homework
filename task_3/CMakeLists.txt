@@ -10,3 +10,4 @@ add_compile_options(
 
 add_executable(deque_int_example main_int.cpp)
 add_executable(deque_string_example main_str.cpp)
+add_executable(deque_tests tests.cpp)
