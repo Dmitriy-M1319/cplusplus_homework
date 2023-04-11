@@ -9,7 +9,7 @@ using namespace task4;
 
 HtmlFilesStorage::HtmlFilesStorage(){}
 
-HtmlFilesStorage::HtmlFilesStorage(QString paths)
+HtmlFilesStorage::HtmlFilesStorage(QString paths): m_pattern(R"((http|ftp|gopher|news|telnet|file)\:(\/\/)www\.[a-z0-9]+\.[a-z0-9]+\.ru)")
 {
     qDebug("Create HTML files storage");
     QStringList path_list = paths.split(u',');
@@ -19,7 +19,7 @@ HtmlFilesStorage::HtmlFilesStorage(QString paths)
         {
             path = path.trimmed();
             QFile *file = new QFile(path);
-            filepaths.push_back(file);
+            m_filepaths.push_back(file);
         }
     }
     else
@@ -31,9 +31,9 @@ HtmlFilesStorage::HtmlFilesStorage(QString paths)
 
 HtmlFilesStorage::~HtmlFilesStorage()
 {
-    if(filepaths.size() != 0)
+    if(m_filepaths.size() != 0)
     {
-        foreach (QFile *file, filepaths)
+        foreach (QFile *file, m_filepaths)
         {
             delete file;
         }
@@ -43,12 +43,12 @@ HtmlFilesStorage::~HtmlFilesStorage()
 bool HtmlFilesStorage::check_valid_paths()
 {
     qDebug("Start to checking file paths for valid files");
-    if(filepaths.size() == 0)
+    if(m_filepaths.size() == 0)
     {
         qCritical("Failed to check files - there are not paths");
         return false;
     }
-    foreach (QFile *file, filepaths)
+    foreach (QFile *file, m_filepaths)
     {
         if(!file->exists())
         {
@@ -60,36 +60,48 @@ bool HtmlFilesStorage::check_valid_paths()
     return true;
 }
 
+void find_url_in_line(QString &line, const QRegularExpression &pattern, QVector<UrlLocation> &urls)
+{
+    QRegularExpressionMatchIterator match_it = pattern.globalMatch(line);
+    while(match_it.hasNext())
+    {
+        QRegularExpressionMatch match = match_it.next();
+        QString url = match.captured(0);
+        int column = line.indexOf(url) + 1;
+        UrlLocation location("", url, 0, column);
+        urls.push_back(location);
+    }
+}
+
+
+void read_lines(QTextStream &stream, const QRegularExpression &pattern, QVector<UrlLocation> &urls)
+{
+    for(int line = 1; !stream.atEnd(); ++line)
+    {
+        auto l = stream.readLine();
+        find_url_in_line(l, pattern, urls);
+        for(UrlLocation &loc: urls)
+            loc.set_line(line);
+    }
+}
+
+
 // Сделать перегрузку на строку, стрим или файл
 void HtmlFilesStorage::find_urls()
 {
     qDebug("Start to finding URLs from files");
-    // Регулярное выражение для URL
-    QRegularExpression url_pattern(R"((http|ftp|gopher|news|telnet|file)\:(\/\/)www\.[a-z0-9]+\.[a-z0-9]+\.ru)");
     // Открываем каждый файл и ищем в нем urls
-    foreach (QFile *file, filepaths)
+    foreach (QFile *file, m_filepaths)
     {
         if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qCritical("Failed to open file for reading");
             throw "Не удалось открыть файл " + file->fileName() + " для чтения:";
         }
-
         QTextStream in(file);
-
-        for(int line = 1; !in.atEnd(); ++line)
-        {
-            QString l = in.readLine();
-            QRegularExpressionMatchIterator match_it = url_pattern.globalMatch(l);
-            while(match_it.hasNext())
-            {
-                QRegularExpressionMatch match = match_it.next();
-                QString url = match.captured(0);
-                int column = l.indexOf(url) + 1;
-                UrlLocation location(file->fileName(), url, line, column);
-                urls.push_back(location);
-            }
-        }
+        read_lines(in, m_pattern, m_urls);
+        for(UrlLocation &loc: m_urls)
+            loc.set_filename(file->fileName());
 
         file->close();
     }
@@ -99,5 +111,5 @@ void HtmlFilesStorage::find_urls()
 
 const QVector<UrlLocation>& HtmlFilesStorage::get_urls()
 {
-    return urls;
+    return m_urls;
 }

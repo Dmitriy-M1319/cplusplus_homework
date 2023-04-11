@@ -4,6 +4,7 @@
 #include <QVector>
 #include <QFile>
 #include <QString>
+#include <QRegularExpression>
 
 #include "urllocation.h"
 
@@ -11,11 +12,7 @@ namespace task4
 {
     class HtmlFilesStorage
     {
-    private:
-        /// Хранилище путей до файлов в виде объектов QFile
-        QVector<QFile*> filepaths;
-        /// Хранилище всех найденных путей
-        QVector<UrlLocation> urls;
+
     public:
         HtmlFilesStorage();
         HtmlFilesStorage(QString paths);
@@ -29,6 +26,13 @@ namespace task4
 
         /// Получить все найденные строки запроса
         const QVector<UrlLocation>& get_urls();
+    private:
+        /// Хранилище путей до файлов в виде объектов QFile
+        QVector<QFile*> m_filepaths;
+        /// Хранилище всех найденных путей
+        QVector<UrlLocation> m_urls;
+        /// Паттерн для поиска URL
+        QRegularExpression m_pattern;
     };
 }
 
