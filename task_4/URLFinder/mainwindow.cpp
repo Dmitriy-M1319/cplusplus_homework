@@ -70,7 +70,7 @@ void MainWindow::on_urlButton_clicked()
 
 void MainWindow::on_addFileButton_clicked()
 {
-    QString file = QFileDialog::getOpenFileName(nullptr, "Open File", "", "*.html");
+    QStringList file = QFileDialog::getOpenFileNames(nullptr, "Open File", "", "*.html");
     if(file.isEmpty())
     {
        ui->urlFindLabel->setText("Указан некорректный список файлов!");
